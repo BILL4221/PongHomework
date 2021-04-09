@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class PlayerController : IController
 {
-    private const KeyCode moveUp = KeyCode.W;
-    private const KeyCode moveDown = KeyCode.S;
     public InputEvent GetInputEvent()
     {
-        if (Input.GetKey(moveUp))
+        if (Input.GetKey(KeyCode.W))
         {
             return InputEvent.UP;
         }
-        else if (Input.GetKey(moveDown))
+        else if (Input.GetKey(KeyCode.S))
+        {
+            return InputEvent.DOWN;
+        }
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            return InputEvent.UP;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            return InputEvent.DOWN;
+        }
+
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        if (mouseY > 0)
+        {
+            return InputEvent.UP;
+        }
+        else if (mouseY < 0)
         {
             return InputEvent.DOWN;
         }
