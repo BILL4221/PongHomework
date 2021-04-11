@@ -5,29 +5,32 @@ using UnityEngine;
 
 namespace Pong.GameState
 {
-    public class StartState : State
+    public class EndMatchState : State
     {
-        public StartState(GameStateManager manager) : base(manager)
+        public EndMatchState(GameStateManager manager) : base(manager)
         {
 
         }
 
         public override void Start()
         {
-            manager.uiManager.ShowStartText(true);
+            manager.ClearAllEntry();
+            manager.uiManager.ShowEndText(true);
         }
 
         public override void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                manager.ChangeState(new SetupState(manager));
+                manager.ChangeState(new StartState(manager));
             }
         }
 
         public override void Exit()
         {
-            manager.uiManager.ShowStartText(false);
+            manager.uiManager.ShowEndText(false);
+            manager.uiManager.ShowScoreText(false);
+            manager.ClearBoard();
         }
     }
 }

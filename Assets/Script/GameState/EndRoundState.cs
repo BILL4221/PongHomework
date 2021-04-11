@@ -5,19 +5,27 @@ using UnityEngine;
 
 namespace Pong.GameState
 {
-    public class SetupState : State
+    public class EndRoundState : State
     {
-        public SetupState(GameStateManager manager) : base(manager)
+        public EndRoundState(GameStateManager manager) : base(manager)
         {
 
         }
 
         public override void Start()
         {
-            manager.SetupBoard();
+            manager.ClearAllEntry();
             manager.ChangeState(new PlayState(manager));
-            manager.ResetScore();
-            manager.uiManager.ShowScoreText(true);
+        }
+
+        public override void Update()
+        {
+
+        }
+
+        public override void Exit()
+        {
+
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pong.Controller;
+using Pong.Util;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +10,17 @@ namespace Pong.Entry
     public class Paddle : MonoBehaviour
     {
         [SerializeField]
-        private float speed = 5.0f;
+        private float speed;
 
         private const float maxHeight = 5.45f;
 
-        private IController controller;
+        private BaseController controller;
+
+        public Action<Paddle, Collider2D> OnHitBall;
 
         private void Awake()
         {
-
+            controller = null;
         }
 
         private void Update()
@@ -26,6 +30,11 @@ namespace Pong.Entry
 
         private void MovePaddle()
         {
+            if (controller == null)
+            {
+                return;
+            }
+
             float direction = 0;
             InputEvent input = controller.GetInputEvent();
 
@@ -44,17 +53,29 @@ namespace Pong.Entry
             transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
         }
 
-        public void SetController(IController controller)
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Utilities.BallLayer))
+            {
+                // TODO: shouldn't use getcomponent in run time
+                Ball ball = collision.GetComponent<Ball>();
+                ball.BounchWithPaddle();
+            }
+        }
+
+        public void SetPaddleSpeed(float speed)
+        {
+            this.speed = speed;
+        }
+        public void SetController(BaseController controller)
         {
             this.controller = controller;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        public BaseController GetController()
         {
-            if (collision.gameObject.layer == 1 >> 8)
-            {
-                
-            }
+            return controller;
         }
+
     }
 }
