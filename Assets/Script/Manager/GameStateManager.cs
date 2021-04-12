@@ -21,6 +21,11 @@ namespace Pong.Manager
         public float BallSpeed;
         public float BuffSpeed;
         public int ScoreMatchPoint;
+        public Vector3 SpawnBallStartPosition;
+        public float minSpawnBuffXPos;
+        public float maxSpawnBuffXPos;
+        public float minSpawnBuffYPos;
+        public float maxSpawnBuffYPos;
     }
     public class GameStateManager : MonoBehaviour
     {
@@ -82,6 +87,8 @@ namespace Pong.Manager
             var playerController = SetupPlayerController();
             playerPaddle.SetController(playerController);
             opponentPaddle = AddPaddle(Config.RightPlayerStartSpot.position);
+            var opponentController = new AIController(this, opponentPaddle);
+            opponentPaddle.SetController(opponentController);
             uiManager.ShowInputButton(true);
         }
 
@@ -213,6 +220,20 @@ namespace Pong.Manager
         public void SetupBoundary()
         {
             Boundary.OnBallBounceOff += BallOutofScene;
+        }
+
+        public List<Ball> GetBallList()
+        {
+            List<Ball> listBall = new List<Ball>();
+            foreach (var entry in entryList)
+            {
+                var ball = entry.GetComponent<Ball>();
+                if (ball != null)
+                {
+                    listBall.Add(ball);
+                }
+            }
+            return listBall;
         }
     }
 }

@@ -10,16 +10,17 @@ namespace Pong.Entry
         private float speed;
         private Vector3 direction;
         private float multiplySpeed;
+
         private void Awake()
         {
             speed = 5.0f;
             multiplySpeed = 1.0f;
-            direction = new Vector3(Random.Range(0.2f, 1) * Utilities.RandomSide(), Random.Range(-1f, 1), 0).normalized;
+            direction = new Vector3(Random.Range(Utilities.minBallSpawnDirectionX, 1.0f) * Utilities.RandomSide(), Random.Range(-1f, 1), 0).normalized;
         }
 
         private void Update()
         {
-            transform.position += Time.deltaTime * speed * multiplySpeed * direction;
+            transform.position += Time.deltaTime * GetBallSpeedVector();
         }
 
         public void BounchWithPaddle()
@@ -36,6 +37,11 @@ namespace Pong.Entry
         public void SetSpeed(float speed)
         {
             this.speed = speed;
+        }
+
+        public Vector3 GetBallSpeedVector()
+        {
+            return speed * multiplySpeed * direction;
         }
 
         public void SetMultiplySpeed(float multiply)

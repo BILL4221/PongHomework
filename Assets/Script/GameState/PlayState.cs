@@ -16,8 +16,8 @@ namespace Pong.GameState
 
         public override void Start()
         {
-            manager.AddBall(Vector3.zero);
-            Vector3 spawnBuffPos = new Vector3(Random.Range(2.0f, 8.0f) * Utilities.RandomSide(), Random.Range(-5.0f, 5.0f), 0);
+            manager.AddBall(manager.Config.SpawnBallStartPosition);
+            Vector3 spawnBuffPos = new Vector3(Random.Range(manager.Config.minSpawnBuffXPos, manager.Config.maxSpawnBuffXPos) * Utilities.RandomSide(), Random.Range(manager.Config.minSpawnBuffYPos, manager.Config.maxSpawnBuffYPos), 0);
             manager.AddBuff(spawnBuffPos);
             manager.ResetPaddle();
             manager.SetupBoundary();

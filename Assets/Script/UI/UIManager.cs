@@ -19,6 +19,9 @@ namespace Pong.UI
         [SerializeField]
         private Text endText;
 
+        [SerializeField]
+        private Text scoreEndRoundText;
+
         public Button ToggleWASDButton;
 
         public Button ToggleArrowButton;
@@ -56,6 +59,14 @@ namespace Pong.UI
             ToggleMouseButton.gameObject.SetActive(show);
             ToggleWASDButton.gameObject.SetActive(show);
             ToggleArrowButton.gameObject.SetActive(show);
+        }
+        public void ShowEndRoundScoreText(bool show)
+        {
+            if (show)
+            {
+                scoreEndRoundText.text = string.Format("{0} - {1}", leftScoreText.text, rightScoreText.text);
+            }
+            scoreEndRoundText.gameObject.SetActive(show);
         }
     }
 }

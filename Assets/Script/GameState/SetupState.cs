@@ -14,10 +14,10 @@ namespace Pong.GameState
 
         public override void Start()
         {
-            manager.SetupBoard();
-            manager.ChangeState(new PlayState(manager));
+            manager.SetupBoard();          
             manager.ResetScore();
             manager.uiManager.ShowScoreText(true);
+            manager.ChangeState(new PreStartState(manager));
         }
     }
 }

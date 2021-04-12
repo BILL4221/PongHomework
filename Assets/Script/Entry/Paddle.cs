@@ -12,8 +12,6 @@ namespace Pong.Entry
         [SerializeField]
         private float speed;
 
-        private const float maxHeight = 5.45f;
-
         private BaseController controller;
 
         public Action<Paddle, Collider2D> OnHitBall;
@@ -49,7 +47,7 @@ namespace Pong.Entry
             }
 
             float yPos = transform.position.y + direction * speed * Time.deltaTime;
-            yPos = Mathf.Clamp(yPos, -maxHeight, maxHeight);
+            yPos = Mathf.Clamp(yPos, -Utilities.MaxBoardHeight, Utilities.MaxBoardHeight);
             transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
         }
 
@@ -57,7 +55,7 @@ namespace Pong.Entry
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Utilities.BallLayer))
             {
-                // TODO: shouldn't use getcomponent in run time
+                // TODO: shouldn't use getcomponent in update loop
                 Ball ball = collision.GetComponent<Ball>();
                 ball.BounchWithPaddle();
             }
@@ -67,6 +65,7 @@ namespace Pong.Entry
         {
             this.speed = speed;
         }
+
         public void SetController(BaseController controller)
         {
             this.controller = controller;

@@ -14,7 +14,7 @@ namespace Pong.Controller
 
     public abstract class BaseController
     {
-        private GameStateManager manager;
+        protected GameStateManager manager;
         public BaseController(GameStateManager manager)
         {
             this.manager = manager;
