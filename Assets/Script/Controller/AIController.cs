@@ -21,7 +21,7 @@ namespace Pong.Controller
         public override InputEvent GetInputEvent()
         {
             var ballList = manager.GetBallList();
-            float minDistance = 100000;
+            float minDistance = float.MaxValue;
             Ball nearestBall = null;
             foreach (var ball in ballList)
             {
@@ -36,6 +36,8 @@ namespace Pong.Controller
             {
                 float distanceX = paddle.transform.position.x - nearestBall.transform.position.x;
                 Vector3 ballDirection = nearestBall.GetBallSpeedVector();
+                
+                // ball direction go to this paddle
                 if (ballDirection.x * distanceX > 0)
                 {
                     float xHitTime = distanceX / ballDirection.x;
